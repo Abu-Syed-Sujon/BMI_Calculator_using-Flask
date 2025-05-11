@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        form input { margin: 10px; padding: 10px; }
+        .result { margin: 20px; font-size: 1.2em; }
+        table { margin: 0 auto; border-collapse: collapse; }
+        th, td { border: 1px solid #aaa; padding: 8px; }
+    </style>
+</head>
+<body>
+    <h1>BMI Calculator</h1>
+    <form method="POST">
+        <input type="number" name="weight" step="0.1" placeholder="Weight (kg)" required>
+        <input type="number" name="height" step="0.1" placeholder="Height (cm)" required>
+        <button type="submit">Calculate</button>
+    </form>
+
+    {% if bmi %}
+        <div class="result">
+            <p>Your BMI: <strong>{{ bmi }}</strong></p>
+            <p>Category: <strong>{{ category }}</strong></p>
+        </div>
+    {% endif %}
+
+    {% if records %}
+        <h2>Recent Records</h2>
+        <table>
+            <tr><th>Weight (kg)</th><th>Height (cm)</th><th>BMI</th><th>Category</th><th>Date</th></tr>
+            {% for r in records %}
+                <tr>
+                    <td>{{ r.weight }}</td>
+                    <td>{{ r.height }}</td>
+                    <td>{{ r.bmi }}</td>
+                    <td>{{ r.category }}</td>
+                    <td>{{ r.date.strftime('%Y-%m-%d %H:%M') }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
+
